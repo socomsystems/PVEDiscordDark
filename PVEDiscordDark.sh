@@ -149,6 +149,7 @@ function install {
         if [ "$_silent" = false ]; then echo -e "\e[1A\e[K${CHECKMARK} Downloading images (${#IMAGELISTARR[@]}/${#IMAGELISTARR[@]})"; fi
 
         if [ "$_silent" = false ]; then echo -e "Theme installed."; fi
+	sudo chattr +i /usr/share/pve-manager/images/dd_logo.png
         if [ "$_noexit" = false ]; then exit 0; fi
     fi
 }
@@ -169,7 +170,8 @@ function uninstall {
         sed -i "/<script type='text\/javascript' src='\/pve2\/js\/dd_patcher.js'><\/script>/d" /usr/share/pve-manager/index.html.tpl
 
         if [ "$_silent" = false ]; then echo -e "${CHECKMARK} Removing images"; fi
-        rm /usr/share/pve-manager/images/dd_*
+        chattr -i /usr/share/pve-manager/images/dd_logo.png
+	rm /usr/share/pve-manager/images/dd_*
 
         if [ "$_silent" = false ]; then echo -e "Theme uninstalled."; fi
         if [ "$_noexit" = false ]; then exit 0; fi
