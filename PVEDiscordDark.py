@@ -2,7 +2,6 @@
 
 import os
 import sys
-import stat
 import time
 import subprocess
 import urllib.request
@@ -102,9 +101,9 @@ def installTheme():
         imageCurrent = index + 1
         cprint(colors.NORMAL, 'Downloading images [' + str(imageCurrent) + '/' + str(len(images)) + ']..\r', False, True)
         urllib.request.urlretrieve(baseURL + '/PVEDiscordDark/images/' + image, '/usr/share/pve-manager/images/' + image)
-        logo = '/usr/share/pve-manager/images/dd_logo.png'
-        flags = os.SF_IMMUTABLE
-        os.chflags( logo, flags)
+            import subprocess
+            subprocess.call(['sh', 'sudo ./locklogo.sh'])
+            0
     cprint(colors.OKGREEN, '\nTheme installed successfully!', True)
     if ACTION == None:
         cprint(colors.NORMAL, 'Press [ENTER] to go back.')
@@ -136,9 +135,9 @@ def uninstallTheme():
     cprint(colors.NORMAL, 'Removing images..')
     for asset in os.listdir('/usr/share/pve-manager/images/'):
         if asset.startswith('dd_'):
-            logo = '/usr/share/pve-manager/images/dd_logo.png'
-            flags = os.UF_IMMUTABLE
-            os.chflags( logo, flags)
+            import subprocess
+            subprocess.call(['sh', 'sudo ./unlocklogo.sh'])
+            0
             os.remove('/usr/share/pve-manager/images/' + asset)
     cprint(colors.OKGREEN, '\n\nTheme uninstalled successfully!', True)
     if ACTION == None:
